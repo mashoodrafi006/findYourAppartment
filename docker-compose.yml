@@ -5,11 +5,11 @@ services:
         restart: always
         build: .
         ports:
-            - '5090:5090'
+            - '3000:3000'
         links:
             - mongo
     mongo:
         container_name: mongo
         image: mongo
         ports:
-            - '27017:27017'
+            - '27018:27018'

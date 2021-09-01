@@ -5,6 +5,7 @@ import config from '../config/config';
 
 const mongoConnection = () => {
     try {
+        console.log('In mongo connection.', config.mongoUrl);
         mongoose
             .connect(config.mongoUrl, {
                 useNewUrlParser: true,

@@ -1,20 +1,20 @@
 const testController = {};
 
-testController.test = () => {
+testController.test = (req, res) => {
     try {
         const a1 = [6, 5, 4, 3, 2, 1];
-        const a2 = ['mood', 'mashood', 'aam', 'zinger', 'icecream'];
+        const a2 = ['mood', 'mashood', 'aam', 'zinger', 'icecream','mashood'];
         const a3 = [1, 2, 3];
 
-        const mapped = a1.map((element) => element * 2);
-        const filtered = a1.filter((element) => element % 2 == 0);
-        const sorted = a1.sort((a, b) => (a > b ? 1 : -1));
-        const sortedString = a2.sort((a, b) => (a > b ? 1 : -1));
-        const removedDuplicated = [...new Set([...a1, ...a3])];
-        const everyIsEven = a1.some((element) => element % 2 == 0);
-        const includes = a1.includes(16);
-        const someString = 'm~a~s~h~o~o~d';
-        const splitted = someString.split('~');
+        // const mapped = a1.map((element) => element * 2);
+        // const filtered = a1.filter((element) => element % 2 == 0);
+        // const sorted = a1.sort((a, b) => (a > b ? 1 : -1));
+        // const sortedString = a2.sort((a, b) => (a > b ? 1 : -1));
+        // const removedDuplicated = [...new Set([...a1, ...a3])];
+        // const everyIsEven = a1.some((element) => element % 2 == 0);
+        // const includes = a1.includes(16);
+        // const someString = 'm~a~s~h~o~o~d';
+        // const splitted = someString.split('~');
 
         // const mapped = a1.map((element) => element + 2);
         // const filtered = a1.filter((element) => element == 2 || element == 4);
@@ -24,12 +24,22 @@ testController.test = () => {
         // const every = a1.every((element) => element > 0);
         // const some = a1.some((element) => element > 1);
         // const includes = a1.includes(100);
-        // const someString = 'm~a~s~h~o~o~d';
+        const someString = 'm~a~s~h~o~o~d';
         // const broke = someString.split('~');
         // const find = a2.find((element) => element == 'mashood');
         // const findIndex = a2.findIndex((element) => element == 'mashood');
         // const sliced = a2.slice(1, 3);
         // const reversed = a1.reverse();
+
+        // const mashoodIndex = a2.indexOf(element => element === "mashood");
+        // console.log(mashoodIndex);
+        // a = a2.reduce(function(a, e, i) {
+        //     if (e === 'mashood'){
+        //         a.push(i);
+        //     }
+        //     return a;
+        // }, []);
+        // console.log(a);
 
         // const newArray = [1, 2, 3, 4, 5];
         // //Pushed element to end of array
@@ -43,9 +53,119 @@ testController.test = () => {
         // eeeArray.shift();
         // //Add to start of array
         // eeeArray.unshift(1);
+
+
+        //Push =: Pushes value to end of array
+        //Pop =: Removes value from end of array.
+
+        //Shift =: Removes value from start of array.
+        //Unshift =: Adds value to start of array
+
+        // setTimeout(() => {
+        //     console.log("in timeout");
+        // },2000);
+
+
+    // To keep iterating
+    // let iterator = 0;
+    // let intervalId = setInterval(() => {
+    //     console.log('In set interval.');
+    //     if (iterator == 2) {
+    //         console.log('In clear interval');
+    //         clearInterval(intervalId);
+    //     }
+    //     iterator += 1;
+    // }, 500);
+    // new Promise(function(resolve, reject) {
+    //     setTimeout(() => {
+    //         resolve(1)
+    //     }, 1000); 
+    //   }).then(function(result) { 
+    //     console.log(result); 
+    //     return result * 2;
+    //   }).then(function(result) {
+
+    //     console.log(result); 
+    //     return result * 2;
+    //   }).then(function(result) {
+
+    //     console.log(result); 
+    //     return result * 2;
+    //   });
+
+
+    // Finally.
+    // let promise = new Promise((resolve, reject) =>{
+    //     setTimeout(() =>{
+    //         resolve('Success');
+    //     }, 500);
+    //     reject('Reject');
+    // });
+    // promise.then(()=>{
+    //     console.log('In then.');
+    // }).catch(()=>{
+    //     console.log('In catch.');
+    // }).finally(() =>{
+    //     console.log('In finally.');
+    // });
+
+    let promise = job(true);
+
+    // success Defeat error Error caught
+
+    promise.then(function(data) {
+        console.log(data);
+        return job(true);
+    })
+    .then(function(data) {
+        if (data !== 'victory') {
+            throw 'Defeat';
+        }
+        return job(true);
+    })
+    .then(function(data) {
+        console.log(data);
+    })
+    .catch(function(error) {
+        console.log(error);
+        return job(false);
+    })
+    .then(function(data) {
+        console.log(data);
+        return job(true);
+    })
+    .catch(function(error) {
+        console.log(error);
+        return 'Error caught';
+    })
+    .then(function(data) {
+        console.log(data);
+        return new Error('test');
+    })
+    .then(function(data) {
+        console.log('Success:', data.message);
+    })
+    .catch(function(data) {
+        console.log('Error:', data.message);
+    });
+
+
+    return res.json({body: "Success"});
     } catch (error) {
         console.log(error);
     }
+
+
+    function job(state) {
+        return new Promise(function(resolve, reject) {
+            if (state) {
+                resolve('success');
+            } else {
+                reject('error');
+            }
+        });
+    }
+
 
     // var promise = new Promise(function(resolve, reject) {
     //     setTimeout(function() {
@@ -220,7 +340,7 @@ function job(state) {
 // }
 
 testController.findNumberType = (number) => {
-    console.log(number);
+    console.log("Number: ",number);
     try {
         if (isNaN(number)) reject('error');
         const promise = new Promise((resolve, reject) => {
