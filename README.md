@@ -10,7 +10,7 @@
 
 ### Project Details
 
-It's an restaurant panel API's project.
+It's an Homelike API's project.
 
 ## Code Style
 
