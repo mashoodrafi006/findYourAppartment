@@ -5,9 +5,9 @@ name: Node.js CI
 
 on:
   push:
-    branches: [master]
+    branches: [feature/docker-compose-test]
   pull_request:
-    branches: [master]
+    branches: [feature/docker-compose-test]
 
 jobs:
   build:
