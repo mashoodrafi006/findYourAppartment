@@ -6,6 +6,12 @@ testController.test = (req, res) => {
         const a2 = ['mood', 'mashood', 'aam', 'zinger', 'icecream','mashood'];
         const a3 = [1, 2, 3];
 
+
+        return res.json({ 
+            body: "Hello master."
+        });
+
+
         // const mapped = a1.map((element) => element * 2);
         // const filtered = a1.filter((element) => element % 2 == 0);
         // const sorted = a1.sort((a, b) => (a > b ? 1 : -1));
