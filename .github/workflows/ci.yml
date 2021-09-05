@@ -1,32 +1,19 @@
-# This workflow will do a clean install of node dependencies, cache/restore them, build the source code and run tests across different versions of node
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
-
-name: Node.js CI
-
+name: Deploy Docker Image to Amazon ElasticBeanstalk - Development 
 on:
   push:
-    branches: [feature/docker-compose-test]
-  pull_request:
-    branches: [feature/docker-compose-test]
+    branches:
+      - feature/docker-compose-test
 
 jobs:
-  build:
+  deploy:
+    name: Build And Deploy to AWS
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [12.x]
-
     steps:
-      - uses: actions/checkout@v2
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: "npm"
-      - run: npm ci
-      - run: npm run build --if-present
-      - run: npm test
+      - uses: chrislennon/action-aws-cli@v1.1
+
+      - name: Checkout
+        uses: actions/checkout@v2
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -37,13 +24,52 @@ jobs:
 
       - name: Login to Amazon ECR
         id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v1          
-          
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Get App Version
+        id: get-version
+        run: |
+          versionValue=$(cat package.json | jq '.version')
+          appVersion="${versionValue%\"}"
+          appVersion="${appVersion#\"}"
+          echo "::set-output name=app-version::$appVersion"
+
+      - name: Get Branch name
+        id: get-branch
+        run: echo ::set-output name=branch-name::${GITHUB_REF#refs/*/}
+
       - name: Build, tag, and push image to Amazon ECR
+        id: build-image
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: bookings
-          IMAGE_TAG: latest
+          ECR_REPOSITORY: booking
+          IMAGE_TAG: v${{ steps.get-version.outputs.app-version }}
         run: |
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+
+      - name: Generate Deploy File
+        env:
+          IMAGE_NAME: ${{ steps.build-image.outputs.image }}
+          ZIP_FILE: v${{ steps.get-version.outputs.app-version }}
+        run: |
+          envsubst < Dockerrun.template.json > Dockerrun.aws.json
+          zip -r $ZIP_FILE.zip Dockerrun.aws.json
+
+      - name: Deploy File
+        env:
+          ZIP_FILE: v${{ steps.get-version.outputs.app-version }}.zip
+          APP_VERSION: v${{ steps.get-version.outputs.app-version }}
+        run: |
+          aws s3 cp $ZIP_FILE s3://elasticbeanstalk-booking-versions
+
+          aws elasticbeanstalk create-application-version --application-name booking \
+            --version-label $APP_VERSION \
+            --source-bundle S3Bucket=elasticbeanstalk-booking-versions,S3Key=$ZIP_FILE \
+            --description "${{ github.event.head_commit.message }}"
+
+          aws elasticbeanstalk update-environment --application-name booking \
+            --environment-name booking-${{ steps.get-branch.outputs.branch-name }} \
+            --solution-stack-name "64bit Amazon Linux 2 v3.1.0 running Docker" \
+            --version-label $APP_VERSION
