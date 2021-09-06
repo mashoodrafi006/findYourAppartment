@@ -5,7 +5,7 @@ const config = {
     port: process.env.PORT || 3000,
     gqlPort: process.env.GQL_PORT || 4000,
     appLocation: process.env.APP_LOCATION || 'FRANCE',
-    mongoUrl: process.env.MONGO || 'mongodb://localhost:27017/homeLike',
+    mongoUrl: process.env.MONGO || 'mongodb://localhost:27017/countryDatabase'
 };
 
 export default config;
