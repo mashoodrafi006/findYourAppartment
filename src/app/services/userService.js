@@ -29,13 +29,13 @@ userService.loginUser = async (credentials) => {
 
 userService.saveUserApartment = async (userApartmentDetails) => {
     try {
-        this.isSaved = false;
+        let isSaved = false;
         let promises = await userService.findUserAndApartment(userApartmentDetails);
 
         await Promise.all(promises).then(async (resolvedPromises) => {
-            this.isSaved = await userRepository.saveUserApartment(resolvedPromises);
+            isSaved = await userRepository.saveUserApartment(resolvedPromises);
         });
-        return { isApartmentSaved: this.isSaved };
+        return { isApartmentSaved: isSaved };
     } catch (error) {
         throw error;
     }

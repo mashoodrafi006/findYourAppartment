@@ -85,8 +85,6 @@ export default class UserValidator {
                 res.json(INVALID_REQUEST);
             }
         } catch (error) {
-            return error;
-            console.log(error);
             res.json(CONTROLLER_ERROR);
         }
     }
