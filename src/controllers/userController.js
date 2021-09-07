@@ -48,7 +48,7 @@ userController.saveUserApartment = async (req, res) => {
 
         return res.json(response);
     } catch (error) {
-        console.log(error);
+        return error;
         logger.log({
             level: 'error',
             message: error.message,
