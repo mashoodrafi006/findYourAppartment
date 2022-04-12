@@ -3,11 +3,64 @@ const testController = {};
 testController.test = (req, res) => {
     try {
         const a1 = [6, 5, 4, 3, 2, 1];
-        const a2 = ['mood', 'mashood', 'aam', 'zinger', 'icecream','mashood'];
+        const a2 = ['mood', 'mashood', 'aam', 'zinger', 'icecream', 'mashood'];
         const a3 = [1, 2, 3];
 
+        const firstName = "afzal";
+        const lastName = "khan";
 
-        return res.json({ 
+        // console.log(firstName.split(""));
+        // console.log(lastName.split("")
+        //     .reverse()
+        //     .join("-"));
+        // const brokenArray = firstName.split('');
+        // brokenArray.push(lastName.split("").reverse());
+        // console.log(brokenArray.length);
+        // const sliced = "mashood".slice(0,1);
+        // console.log(sliced);
+        const names = ["mashood", "rafi", "afzal"];
+
+        //Slice has start/end, from left to right.
+        const slice1 = "Mashood".slice(0); // Mashood
+        const slice2 = "Mashood".slice(1, 5); // ashoo
+        const slice3 = "Mashood".slice(-2); // od
+        let nameString = "Mashood Rafi";
+        let part1 = nameString.slice(-12, -6); // Banana
+
+        //Substring has start/end, similar to slice but does not accept negative indexes
+        //first one is index, next one is length of the string from given index.
+        let stringName = "My name is Mashood Rafi";
+        let portion1 = stringName.substr(7, 11); // is Mashood
+        let portion2 = stringName.substr(8); // is Mashood Rafi
+
+        //Replace
+        const school = "Beaconhouse school system";
+        // console.log(school.replace("house", "home")); // Beaconhome school system
+
+        //Indexof
+        // console.log(stringName.indexOf("Rafi")); // 19
+        // console.log(names.indexOf("rafi"));
+
+        const array = ['I', 'hAve', 'theSe', 'ITEMs'],
+            query = 'these',
+            result = array.findIndex(item => query.toLowerCase() === item.toLowerCase());
+
+        // console.log("Result:", result);
+
+        const indexString = "Mashood Rafi";
+        const indexedArray = ["Mashood", "Rafi", "Afzal", "Khan"];
+        // console.log(indexString.indexOf("oo"));
+        // console.log(indexedArray.findIndex(element => element == "Afzal"));
+
+        //indexOf in strings, second parameter is starting part of string i.e for second occurance can be used.
+        //findIndex in arrays
+        const longString = "Name is Afzal Khan, Husband is Afzal Khan";
+        console.log(longString.indexOf("Afzal", 15));
+
+
+
+
+        return res.json({
             body: "Hello master."
         });
 
@@ -72,98 +125,98 @@ testController.test = (req, res) => {
         // },2000);
 
 
-    // To keep iterating
-    // let iterator = 0;
-    // let intervalId = setInterval(() => {
-    //     console.log('In set interval.');
-    //     if (iterator == 2) {
-    //         console.log('In clear interval');
-    //         clearInterval(intervalId);
-    //     }
-    //     iterator += 1;
-    // }, 500);
-    // new Promise(function(resolve, reject) {
-    //     setTimeout(() => {
-    //         resolve(1)
-    //     }, 1000); 
-    //   }).then(function(result) { 
-    //     console.log(result); 
-    //     return result * 2;
-    //   }).then(function(result) {
+        // To keep iterating
+        // let iterator = 0;
+        // let intervalId = setInterval(() => {
+        //     console.log('In set interval.');
+        //     if (iterator == 2) {
+        //         console.log('In clear interval');
+        //         clearInterval(intervalId);
+        //     }
+        //     iterator += 1;
+        // }, 500);
+        // new Promise(function(resolve, reject) {
+        //     setTimeout(() => {
+        //         resolve(1)
+        //     }, 1000); 
+        //   }).then(function(result) { 
+        //     console.log(result); 
+        //     return result * 2;
+        //   }).then(function(result) {
 
-    //     console.log(result); 
-    //     return result * 2;
-    //   }).then(function(result) {
+        //     console.log(result); 
+        //     return result * 2;
+        //   }).then(function(result) {
 
-    //     console.log(result); 
-    //     return result * 2;
-    //   });
-
-
-    // Finally.
-    // let promise = new Promise((resolve, reject) =>{
-    //     setTimeout(() =>{
-    //         resolve('Success');
-    //     }, 500);
-    //     reject('Reject');
-    // });
-    // promise.then(()=>{
-    //     console.log('In then.');
-    // }).catch(()=>{
-    //     console.log('In catch.');
-    // }).finally(() =>{
-    //     console.log('In finally.');
-    // });
-
-    let promise = job(true);
-
-    // success Defeat error Error caught
-
-    promise.then(function(data) {
-        console.log(data);
-        return job(true);
-    })
-    .then(function(data) {
-        if (data !== 'victory') {
-            throw 'Defeat';
-        }
-        return job(true);
-    })
-    .then(function(data) {
-        console.log(data);
-    })
-    .catch(function(error) {
-        console.log(error);
-        return job(false);
-    })
-    .then(function(data) {
-        console.log(data);
-        return job(true);
-    })
-    .catch(function(error) {
-        console.log(error);
-        return 'Error caught';
-    })
-    .then(function(data) {
-        console.log(data);
-        return new Error('test');
-    })
-    .then(function(data) {
-        console.log('Success:', data.message);
-    })
-    .catch(function(data) {
-        console.log('Error:', data.message);
-    });
+        //     console.log(result); 
+        //     return result * 2;
+        //   });
 
 
-    return res.json({body: "Success"});
+        // Finally.
+        // let promise = new Promise((resolve, reject) =>{
+        //     setTimeout(() =>{
+        //         resolve('Success');
+        //     }, 500);
+        //     reject('Reject');
+        // });
+        // promise.then(()=>{
+        //     console.log('In then.');
+        // }).catch(()=>{
+        //     console.log('In catch.');
+        // }).finally(() =>{
+        //     console.log('In finally.');
+        // });
+
+        let promise = job(true);
+
+        // success Defeat error Error caught
+
+        promise.then(function (data) {
+            console.log(data);
+            return job(true);
+        })
+            .then(function (data) {
+                if (data !== 'victory') {
+                    throw 'Defeat';
+                }
+                return job(true);
+            })
+            .then(function (data) {
+                console.log(data);
+            })
+            .catch(function (error) {
+                console.log(error);
+                return job(false);
+            })
+            .then(function (data) {
+                console.log(data);
+                return job(true);
+            })
+            .catch(function (error) {
+                console.log(error);
+                return 'Error caught';
+            })
+            .then(function (data) {
+                console.log(data);
+                return new Error('test');
+            })
+            .then(function (data) {
+                console.log('Success:', data.message);
+            })
+            .catch(function (data) {
+                console.log('Error:', data.message);
+            });
+
+
+        return res.json({ body: "Success" });
     } catch (error) {
         console.log(error);
     }
 
 
     function job(state) {
-        return new Promise(function(resolve, reject) {
+        return new Promise(function (resolve, reject) {
             if (state) {
                 resolve('success');
             } else {
@@ -304,25 +357,25 @@ testController.test = (req, res) => {
     //     // console.log(key, array1[key]);
     // }
 };
-let racer1 = function() {
+let racer1 = function () {
     setTimeout(() => console.log('timeout'), 0);
     setImmediate(() => console.log('immediate'));
     process.nextTick(() => console.log('nextTick'));
 };
 
-let racer2 = function() {
+let racer2 = function () {
     process.nextTick(() => console.log('nextTick'));
     setTimeout(() => console.log('timeout'), 0);
     setImmediate(() => console.log('immediate'));
 };
 
-let racer3 = function() {
+let racer3 = function () {
     setImmediate(() => console.log('immediate'));
     process.nextTick(() => console.log('nextTick'));
     setTimeout(() => console.log('timeout'), 0);
 };
 function job(state) {
-    return new Promise(function(resolve, reject) {
+    return new Promise(function (resolve, reject) {
         if (state) {
             resolve('success');
         } else {
@@ -346,7 +399,7 @@ function job(state) {
 // }
 
 testController.findNumberType = (number) => {
-    console.log("Number: ",number);
+    console.log("Number: ", number);
     try {
         if (isNaN(number)) reject('error');
         const promise = new Promise((resolve, reject) => {
